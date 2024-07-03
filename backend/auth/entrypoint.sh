@@ -1,8 +1,11 @@
-@@ -0,0 +1,7 @@
-#!/bin/sh
 
+#!/bin/bash
+
+set -e
 # Run database migrations
-npx knex migrate:latest
+yarn migrate
+
+yarn seed
 
 # Start the application
-exec npm start
+yarn npm start

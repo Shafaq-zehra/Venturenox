@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgresdb
+      POSTGRES_DB: signupapp
     volumes:
       - pgdata:/var/lib/postgresql/data 
     ports:
@@ -17,9 +17,14 @@ services:
     build:
       context: ./backend/auth
     ports:
-      - 3000:3000
-    env_file:
-      - .env
+      - 4000:4000
+    command: sh ./entrypoint.sh
+    environment:
+      - POSTGRES_USERNAME=$DB_USERNAME
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+      - POSTGRES_HOST=$DB_HOST
+      - POSTGRES_DATABASE=$AUTH_DB
+    
     depends_on:
       - db
 
@@ -27,12 +32,10 @@ services:
       build:
         context: ./web
       ports:
-        - 8081:80
+        - 80:80
       depends_on:
         - auth-service
-      env_file:
-        - .env
-
+      
   adminer:
     image: adminer
     ports:
