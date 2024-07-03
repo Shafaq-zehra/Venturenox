@@ -8,4 +8,6 @@ yarn migrate
 yarn seed
 
 # Start the application
-yarn npm start
+yarn start
+
+

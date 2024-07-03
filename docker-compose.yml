@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  db:
+  postgresdb:
     image: postgres
     restart: always
     environment:
@@ -20,13 +20,12 @@ services:
       - 4000:4000
     command: sh ./entrypoint.sh
     environment:
-      - POSTGRES_USERNAME=$DB_USERNAME
-      - POSTGRES_PASSWORD=$DB_PASSWORD
-      - POSTGRES_HOST=$DB_HOST
-      - POSTGRES_DATABASE=$AUTH_DB
-    
+      - POSTGRES_USERNAME=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_HOST=${DB_HOST}
+      - POSTGRES_DATABASE=${AUTH_DB}
     depends_on:
-      - db
+      - postgresdb
 
   web:
       build:
@@ -41,7 +40,7 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - db
+      - postgresdb
 
 volumes:
   pgdata:
