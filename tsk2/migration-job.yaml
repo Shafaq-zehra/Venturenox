@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migration-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: migrate
+        image: shafaqzehra/backend:latest
+        env:
+        - name: POSTGRES_USERNAME
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "postgres"
+        - name: POSTGRES_HOST
+          value: "postgres"
+        - name: POSTGRES_DATABASE
+          value: "signupapp"
+        command: ["yarn", "migrate"]
+      restartPolicy: OnFailure

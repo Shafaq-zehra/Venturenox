@@ -10,4 +10,4 @@ yarn seed
 # Start the application
 yarn start
 
-
+#        command: ["sh", "-c", "npm run migrate"]

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+      - name: auth
+        image: shafaqzehra/backend:latest
+        ports:
+        - containerPort: 4000
+        # command: ["sh", "./entrypoint.sh"]
+        env:
+        - name: POSTGRES_USERNAME
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "postgres"
+        - name: POSTGRES_HOST
+          value: "postgres"
+        - name: POSTGRES_DATABASE
+          value: "signupapp"
+
