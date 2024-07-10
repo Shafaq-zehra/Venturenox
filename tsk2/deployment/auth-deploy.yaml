@@ -17,8 +17,9 @@ spec:
         image: shafaqzehra/backend:latest
         ports:
         - containerPort: 4000
-        # command: ["sh", "./entrypoint.sh"]
         env:
+        - name: GUARD_PORT
+          value: "4000"
         - name: POSTGRES_USERNAME
           value: "postgres"
         - name: POSTGRES_PASSWORD
@@ -27,4 +28,4 @@ spec:
           value: "postgres"
         - name: POSTGRES_DATABASE
           value: "signupapp"
-
+        command: ["yarn", "start"]
