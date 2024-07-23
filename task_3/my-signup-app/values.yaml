@@ -2,12 +2,12 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 2
+replicaCount: 1
 
 image:
   repository: shafaqzehra/backend
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 postgres:
   image: postgres:latest
@@ -16,12 +16,13 @@ postgres:
   database: signupapp
 
 web:
+  
   image: shafaqzehra/frontend:latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 adminer:
   image: adminer:latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 service:
   type: NodePort

@@ -1,10 +1,8 @@
-{{- $fullName := include "my-signup-app.fullname" . -}}
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $fullName }}-auth
+  name: auth
 spec:
   selector:
     app: auth
@@ -18,7 +16,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $fullName }}-adminer
+  name: adminer
 spec:
   selector:
     app: adminer
@@ -32,7 +30,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $fullName }}-postgres
+  name: postgres
 spec:
   selector:
     app: postgres
@@ -46,7 +44,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $fullName }}-web
+  name: web
 spec:
   selector:
     app: web

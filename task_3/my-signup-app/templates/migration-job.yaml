@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "my-signup-app.fullname" . }}-migration
+  name: migration
 spec:
   template:
     spec:
