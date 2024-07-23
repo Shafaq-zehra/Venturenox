@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "my-signup-app.fullname" . }}-migration
+spec:
+  template:
+    spec:
+      containers:
+      - name: migrate
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        env:
+        - name: POSTGRES_USERNAME
+          value: {{ .Values.postgres.username }}
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.postgres.password }}
+        - name: POSTGRES_HOST
+          value: "postgres"
+        - name: POSTGRES_DATABASE
+          value: {{ .Values.postgres.database }}
+        command: ["yarn", "migrate"]
+      restartPolicy: OnFailure

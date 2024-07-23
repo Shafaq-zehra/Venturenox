@@ -1,0 +1,105 @@
+# Default values for my-signup-app.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 2
+
+image:
+  repository: shafaqzehra/backend
+  tag: latest
+  pullPolicy: IfNotPresent
+
+postgres:
+  image: postgres:latest
+  username: postgres
+  password: postgres
+  database: signupapp
+
+web:
+  image: shafaqzehra/frontend:latest
+  pullPolicy: IfNotPresent
+
+adminer:
+  image: adminer:latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  authPort: 30001
+  webPort: 30002
+  postgresPort: 30003
+  adminerPort: 30004
+
+ingress:
+  enabled: true
+  className: nginx 
+  annotations:
+    # nginx.ingress.kubernetes.io/enable-cors: "true"
+    # nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS"
+    # nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    # nginx.ingress.kubernetes.io/configuration-snippet: |
+    #    more_set_headers "Access-Control-Allow-Origin: $http_origin";
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - host: auth.local
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: web.local
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: adminer.local
+      paths:
+        - path: /
+          pathType: Prefix
+serviceAccount:
+  create: true
+  name: ""
+  
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
